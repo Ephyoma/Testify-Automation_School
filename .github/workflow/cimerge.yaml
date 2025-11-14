@@ -1,0 +1,21 @@
+name: CImerge
+
+on:
+  pull_request:
+
+jobs:
+  Test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Test Stage
+        run: |
+          echo "🧪 Running tests... Triggered by a ${{ github.event_name }} event."
+          python main.py
