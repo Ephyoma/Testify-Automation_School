@@ -1,15 +1,12 @@
-name: CImerge
+name: CI Pipeline Demo
 
 on:
-  pull_request:
+  push:
+    branches: [ main, dev ]
 
 jobs:
   Test:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
