@@ -10,7 +10,6 @@ const side2 = 5
 const side3 = 8 // Isosceles
 */
 
-
 /*
 const side1 = 3
 const side2 = 5
