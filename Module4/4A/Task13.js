@@ -23,7 +23,7 @@ const myPersonalLibrary = {
     description:'Learning JavaScript object properties and methods',
     numberOfPages: 120,
     author: 'Ifeoma Onyemize',
-    reading:'true'
+    reading: true
 
  }
 

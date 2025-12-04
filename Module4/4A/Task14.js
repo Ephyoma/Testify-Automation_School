@@ -8,15 +8,12 @@ Remember to log the reading property to the console to confirm the current statu
 */
 
 
-
-
-
 const myPersonalLibrary = {
     title:'JavaScript Object Basics',
     description:'Learning JavaScript object properties and methods',
     numberOfPages: 120,
     author: 'Ifeoma Onyemize',
-    reading:'true',
+    reading: true,
     toggleReadingStatus: function(){
         if(myPersonalLibrary.reading===false) {
             myPersonalLibrary.reading = true
