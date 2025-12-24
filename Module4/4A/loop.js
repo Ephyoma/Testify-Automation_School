@@ -20,3 +20,5 @@ for(let number = 1; number <=1000; number = number+1) {
         console.log(number +' is an odd number')
     }
 }
+
+
