@@ -1,8 +1,9 @@
-package com.graham;
+package com.tasks;
 
-public class JavaDataType {
+public class task2 {
     public static void main(String[] args) {
-// Declaring variables of different data types
+
+        // Declaring variables of different data types
         // byte from -128 to 127
         // short from -32,768 to 32,767
         // int from -2,147,483,648 to 2,147,483,647
@@ -11,7 +12,6 @@ public class JavaDataType {
         // double from 15 decimal digits
         //Char  single letters 'a', 'b'
         // boolean = true, false
-
         byte HouseNumber = -126;
 
         short Amount = 32_767;
@@ -27,6 +27,5 @@ public class JavaDataType {
         System.out.println(soMuchMoney);
         System.out.println(area);
         System.out.println(height);
-
     }
 }
