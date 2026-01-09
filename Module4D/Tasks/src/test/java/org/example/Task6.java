@@ -27,17 +27,17 @@ public class Task6 {
         Thread.sleep(5000);
         //Navigate Login
         //Enter Username
-        driver.findElement(By.cssSelector("input[id=user-name]")).sendKeys("standard_user");
+        driver.findElement(By.cssSelector("input#user-name")).sendKeys("standard_user");
         //Enter password
-        driver.findElement(By.cssSelector("input[id=password]")).sendKeys("secret_sauce");
+        driver.findElement(By.cssSelector("input#password")).sendKeys("secret_sauce");
         //Click on login
-        driver.findElement(By.cssSelector("input[id=login-button]")).click();
+        driver.findElement(By.cssSelector("input#login-button")).click();
         //Navigate to item backpack and click add to cart
-        driver.findElement(By.cssSelector("button[id=add-to-cart-sauce-labs-bolt-t-shirt]")).click();
+        driver.findElement(By.cssSelector("button#add-to-cart-sauce-labs-bolt-t-shirt")).click();
         //Navigate to shopping cart link
-        driver.findElement(By.cssSelector("a[class=shopping_cart_link]")).click();
+        driver.findElement(By.cssSelector("a.shopping_cart_link")).click();
         Thread.sleep(5000);
         //Checkout
-        driver.findElement(By.cssSelector("button[id=checkout]")).click();
+        driver.findElement(By.cssSelector("button#checkout")).click();
     }
 }
