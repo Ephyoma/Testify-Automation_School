@@ -16,6 +16,7 @@ import java.util.Optional;
 
 //Navigate to https://worldweather.wmo.int/en/home.html.
 //Search for your city in the search field. When the result loads, print the days and weather description for each of the days shown in a readable and understandable manner.
+//GetText Task
 public class Task7 {
     public static void main(String[] args) throws InterruptedException {
 
