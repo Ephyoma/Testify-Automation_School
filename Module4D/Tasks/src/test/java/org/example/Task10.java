@@ -2,6 +2,7 @@ package org.example;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -28,6 +29,7 @@ public class Task10 {
 
         Thread.sleep(5000);
 //Switching to iframe to access the close icon
+
         driver.switchTo().frame(0);
         driver.findElement(By.xpath("//span[@class='ui-button-icon ui-icon ui-icon-closethick']")).click();
     }
