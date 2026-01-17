@@ -37,7 +37,6 @@ public class Task13 {
         key.sendKeys("").sendKeys(Keys.ENTER).build().perform();
         Thread.sleep(5000);
 
-
         driver.findElement(By.cssSelector("a[title='Demo Dropdown List']")).click();
         Thread.sleep(5000);
 

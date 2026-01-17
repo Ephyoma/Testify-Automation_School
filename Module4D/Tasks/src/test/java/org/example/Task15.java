@@ -47,7 +47,6 @@ public class Task15 {
     key.sendKeys("").sendKeys(Keys.ENTER).build().perform();
 
     System.out.println("----Searching---");
-
     }
 @Test
     public void cl0seBr0wser() {
