@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Task17">
+
+    <test name="Testsuite Validation Test">
+        <classes>
+            <class name="org.example.Task17ElementsTest"/>
+            <class name="org.example.Task17FormsTest"/>
+            <class name="org.example.Task17WidgetsTest"/>
+            <class name="org.example.Task17InteractionsTest"/>
+        </classes>
+    </test>
+
+</suite>

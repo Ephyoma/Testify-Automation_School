@@ -25,7 +25,7 @@ public class Task11 {
         WebDriver driver = new ChromeDriver(options);
         //Maximax web browser
         driver.manage().window().maximize();
-        //Navigate the url
+        //Navigate the url...................................................................................................................................................................................................................................................................
         driver.navigate().to("https://www.bing.com/");
         //Wait time to allow browser load properly
         Thread.sleep(5000);
