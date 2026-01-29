@@ -1,20 +1,27 @@
 package module4BProject;
 
-import org.example.LoginPage;
-import org.example.NewAccountPage;
-import org.example.RegistrationPage;
+import org.example.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+
 public class TAS4BProjectTest {
     WebDriver driver = null;
+    // Controls whether we create a NEW browser session before a test
+    //private boolean reuseExistingSession = false;
 
 
     @BeforeClass
@@ -31,11 +38,16 @@ public class TAS4BProjectTest {
 
 
     }
-
-//        @AfterMethod
-//    public void cl0seBr0wser() {
-//        driver.quit();
+//    @AfterMethod
+//    public void tearDown() {
+//// Close only when we are NOT reusing session
+//        if (!reuseExistingSession && driver != null) {
+//            driver.quit();
+//            driver = null;
+//        }
 //    }
+
+
     //Register as a new user and take note of your username.
     @Test
     public void register() throws InterruptedException {
@@ -55,25 +67,28 @@ public class TAS4BProjectTest {
         registration.getZipCode().sendKeys("1234566");
         registration.getPhoneNumber().sendKeys("+1234567890");
         registration.getSsn().sendKeys("123456789");
-        registration.getUsername().sendKeys("projectused2");
+        registration.getUsername().sendKeys("testnguser3");
         registration.getPassword().sendKeys("TestPassword");
         registration.getConfirm().sendKeys("TestPassword");
         registration.getCreate().click();
+        Thread.sleep(5000);
 
     }
 
     //Login with the new account
     @Test(dependsOnMethods = "register")
     public void login() throws InterruptedException {
-
-        //Wait 5 sec to navigate back to login page
+//navigate to the url
+//        driver.get("https://parabank.parasoft.com/");
+//        Thread.sleep(5000);
+//navigate back to the login url
         Thread.sleep(5000);
         driver.navigate().back();
 
         //Creating object of the LoginPage
         LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.getUsername().sendKeys("projectused2");
+        loginPage.getUsername().sendKeys("testnguser2");
         loginPage.getPassword().sendKeys("TestPassword");
         loginPage.getLogIn().click();
 
@@ -90,21 +105,153 @@ public class TAS4BProjectTest {
         System.out.println(welcomeNote + " :Account creation success message not found");
 
 
+
+// using this session for the next test
+        //reuseExistingSession = true;
+
+
     }
 @Test(dependsOnMethods = "login")
-    public void openNewAccount() {
+    public void openNewAccount() throws InterruptedException {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    //Creating object of the NewAccountPage
+    NewAccountPage openAccount = new NewAccountPage(driver);
 
-        //Creating object of the NewAccountPage
-        NewAccountPage openAccount = new NewAccountPage(driver);
-        openAccount.getNewAccount().click();
-        openAccount.selectAccountTypeByText("SAVINGS");
-        openAccount.getCreateNewAccount().click();
+    //navigate to the url
+//    driver.get("https://parabank.parasoft.com/");
+//    Thread.sleep(5000);
+//
+//    //Creating object of the LoginPage
+//    LoginPage loginPage = new LoginPage(driver);
+//
+//    loginPage.getUsername().sendKeys("testnguser");
+//    loginPage.getPassword().sendKeys("TestPassword");
+//    loginPage.getLogIn().click();
+
+
+    // Ensure user is fully logged in
+//    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[normalize-space()='Account Services']")
+//    ));
+
+    // WAIT until the link is clickable
+    wait.until(ExpectedConditions.elementToBeClickable(openAccount.getNewAccount())).click();
+    openAccount.selectAccountTypeByText("SAVINGS");
+    Thread.sleep(5000);
+    openAccount.getCreateNewAccount().click();
+
+    Thread.sleep(5000);
+
         String successMessage = openAccount.getAccountSuccessMessage().getText();
     System.out.println(successMessage);
+    Thread.sleep(5000);
+    String newaccount = openAccount.getNewaccount().getText();
+    System.out.println(newaccount);
+
+    Thread.sleep(5000);
 
     SoftAssert message = new SoftAssert();
     message.assertTrue(successMessage.contains("account ID"));
-    System.out.println(successMessage + " :account ID not found, Rather account number ");
+    System.out.println(successMessage + " " + newaccount + " :account ID not found, Rather account number ");
+
+
 
     }
-}
+@Test(dependsOnMethods = "openNewAccount")
+    public void fundTransfer() throws InterruptedException {
+        //creating object of the FundTransferPage
+        FundTransferPage transfer = new FundTransferPage(driver);
+
+        Thread.sleep(5000);
+
+        transfer.getTransfer().click();
+        Thread.sleep(1000);
+
+        int amount = 100;
+        transfer.getAmount().sendKeys(String.valueOf(amount));
+
+        Thread.sleep(1000);
+
+        WebElement selectFromAccount = transfer.getFromAccount();
+
+        Select select = new Select(selectFromAccount);
+        select.selectByIndex(0);
+
+        Thread.sleep(5000);
+
+        WebElement selectToAccount = transfer.getToAccount();
+
+        Select toAccount = new Select(selectToAccount);
+        select.selectByIndex(1);
+
+        transfer.getSubmit().click();
+
+        String transferResult = transfer.getShowResult().getText();
+
+        System.out.println(transferResult);
+
+
+
+    }
+@Test(dependsOnMethods = "fundTransfer")
+
+    public void billsPay() throws InterruptedException {
+        //creating object of the BillPayPage
+        BillPayPage billsPayment = new BillPayPage(driver);
+
+        Thread.sleep(5000);
+        billsPayment.getClickBillsPay().click();
+        Thread.sleep(5000);
+
+        billsPayment.getSenderName().sendKeys("Test1");
+        billsPayment.getSendStreet().sendKeys("Jakunde");
+        billsPayment.getSendCity().sendKeys("Lekki");
+        billsPayment.getSenderState().sendKeys("Lag");
+        billsPayment.getZipCode().sendKeys("123456");
+        billsPayment.getPhoneNumber().sendKeys("08012345678");
+        billsPayment.getReceiverAccountNumber().sendKeys("47199");
+        billsPayment.getReceiverAccount().sendKeys("47199");
+        int billAmount = 50;
+        billsPayment.getAmount().sendKeys(String.valueOf(billAmount));
+        Thread.sleep(5000);
+    Thread.sleep(5000);
+        WebElement selectFromAccount = billsPayment.getSenderAccount();
+
+        Select select = new Select(selectFromAccount);
+        select.selectByIndex(0);
+    Thread.sleep(5000);
+        billsPayment.getSend().click();
+
+
+    }
+
+    public void tranSummary() throws InterruptedException {
+
+        //creating object of the TransactionSummaryPage
+        TransactionSummaryPage transSummary = new TransactionSummaryPage(driver);
+
+        Thread.sleep(5000);
+
+        transSummary.getFindTransactions().click();
+        Thread.sleep(5000);
+
+        WebElement selectAccountId = transSummary.getAccountId();
+
+        Select select = new Select(selectAccountId);
+        select.selectByIndex(0);
+        Thread.sleep(5000);
+
+        int transactionAmount = 100;
+
+        transSummary.getAmount().sendKeys(String.valueOf(transactionAmount));
+        Thread.sleep(5000);
+
+
+        int lessAmount = 70;
+        transSummary.getFindByAmount().click();
+        String summaryDisplay = transSummary.getTransactionResult().getText();
+        System.out.println(summaryDisplay);
+
+        Assert.assertTrue(summaryDisplay.contains("info@testifyltd.co.uk"));
+    }
+
+    }

@@ -20,7 +20,7 @@ public class NewAccountPage {
 
     }
 
-    @FindBy(xpath = "//a[normalize-space()='Open New Account']")
+    @FindBy(css = "a[href='openaccount.htm']")
     private WebElement newAccount;
 
     public WebElement getNewAccount() {
@@ -51,6 +51,12 @@ public class NewAccountPage {
 
     public WebElement getAccountSuccessMessage() {
         return accountSuccessMessage;
+    }
+
+    @FindBy (xpath = "//a[@id='newAccountId']")
+    private WebElement newaccount;
+    public WebElement getNewaccount() {
+        return newaccount;
     }
 
 
