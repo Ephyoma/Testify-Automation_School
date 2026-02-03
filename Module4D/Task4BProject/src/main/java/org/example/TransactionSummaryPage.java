@@ -41,7 +41,7 @@ public class TransactionSummaryPage {
         return findByAmount;
     }
 
-    @FindBy (xpath = "//div[@id='rightPanel']")
+    @FindBy (xpath = "//tbody")
     private WebElement transactionResult;
     public  WebElement getTransactionResult() {
         return transactionResult;

@@ -1,6 +1,7 @@
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.remote.mobile import Mobile
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -40,7 +41,7 @@ def main():
 
     driver = webdriver.Remote("http://127.0.0.1:4723", options=options)
 
-    handle_notifications_popup(driver)
+    #popup = driver.find_element(AppiumBy.ID, "com.android.permissioncontroller:id/permission_allow_button")
 
     time.sleep(5)
     driver.quit()

@@ -1,9 +1,7 @@
 package module4BProject;
 
 import org.example.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,7 +25,7 @@ public class TAS4BProjectTest {
     @BeforeClass
     public void setUpTest() throws InterruptedException {
 
-        System.setProperty("webdriver.chrome.driver", "F:\\Testify\\CI-CD-Lesson\\Testify-Automation_School\\Module4D\\Tasks\\src\\chromedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "F:\\Testify\\CI-CD-Lesson\\Testify-Automation_School\\Module4D\\Tasks\\src\\chromedriver.exe");
         //Launch Web Browser
         ChromeOptions options = new ChromeOptions();
         //prevents password prompts
@@ -67,10 +65,14 @@ public class TAS4BProjectTest {
         registration.getZipCode().sendKeys("1234566");
         registration.getPhoneNumber().sendKeys("+1234567890");
         registration.getSsn().sendKeys("123456789");
-        registration.getUsername().sendKeys("testnguser3");
+        registration.getUsername().sendKeys("tstguse79");
         registration.getPassword().sendKeys("TestPassword");
         registration.getConfirm().sendKeys("TestPassword");
         registration.getCreate().click();
+        Thread.sleep(5000);
+
+        registration.getLogout().click();
+
         Thread.sleep(5000);
 
     }
@@ -79,16 +81,16 @@ public class TAS4BProjectTest {
     @Test(dependsOnMethods = "register")
     public void login() throws InterruptedException {
 //navigate to the url
-//        driver.get("https://parabank.parasoft.com/");
+        //        driver.get("https://parabank.parasoft.com/");
 //        Thread.sleep(5000);
 //navigate back to the login url
         Thread.sleep(5000);
-        driver.navigate().back();
+
 
         //Creating object of the LoginPage
         LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.getUsername().sendKeys("testnguser2");
+        loginPage.getUsername().sendKeys("tstguse79");
         loginPage.getPassword().sendKeys("TestPassword");
         loginPage.getLogIn().click();
 
@@ -223,35 +225,99 @@ public class TAS4BProjectTest {
 
 
     }
+//@Test(dependsOnMethods = "billsPay")
+//    public void tranSummary() throws InterruptedException {
+//
+//        //creating object of the TransactionSummaryPage
+//        TransactionSummaryPage transSummary = new TransactionSummaryPage(driver);
+//
+//        Thread.sleep(5000);
+//
+//        transSummary.getFindTransactions().click();
+//        Thread.sleep(5000);
+//
+//        WebElement selectAccountId = transSummary.getAccountId();
+//
+//        Select select = new Select(selectAccountId);
+//        select.selectByIndex(0);
+//        Thread.sleep(5000);
+//
+//        int transactionAmount = 100;
+//
+//        transSummary.getAmount().sendKeys(String.valueOf(transactionAmount));
+//        Thread.sleep(5000);
+//
+//
+//
+//        transSummary.getFindByAmount().click();
+//        String summaryDisplay = transSummary.getTransactionResult().getText();
+//        System.out.println(summaryDisplay);
+//
+//
+//    Assert.assertTrue(summaryDisplay.contains("100.00"), "Results table does not contain amount $100.00.");
+//    Thread.sleep(5000);
+//
+//    int lessAmount = 70;
+//
+//    transSummary.getFindByAmount().click();
+//    String summaryEmptyDisplay = transSummary.getTransactionResult().getText();
+//    System.out.println("<<<>>> " + summaryEmptyDisplay);
+//
+//    Assert.assertTrue(summaryEmptyDisplay.toLowerCase().contains("no transactions"));
+//    }
 
-    public void tranSummary() throws InterruptedException {
+    @Test(dependsOnMethods = "billsPay")
+    public void updateContactInfo() throws InterruptedException {
 
-        //creating object of the TransactionSummaryPage
-        TransactionSummaryPage transSummary = new TransactionSummaryPage(driver);
+//creating object of the UpdateContactInfoPage
+        UpdateContactInfoPage updateContact = new UpdateContactInfoPage(driver);
 
         Thread.sleep(5000);
 
-        transSummary.getFindTransactions().click();
-        Thread.sleep(5000);
+        updateContact.getUpdateContactInfo().click();
 
-        WebElement selectAccountId = transSummary.getAccountId();
-
-        Select select = new Select(selectAccountId);
-        select.selectByIndex(0);
-        Thread.sleep(5000);
-
-        int transactionAmount = 100;
-
-        transSummary.getAmount().sendKeys(String.valueOf(transactionAmount));
+        String phone = updateContact.getCustomerPhoneNumber().getAttribute("value");
+        System.out.println("Phone raw: " + phone);
         Thread.sleep(5000);
 
 
-        int lessAmount = 70;
-        transSummary.getFindByAmount().click();
-        String summaryDisplay = transSummary.getTransactionResult().getText();
-        System.out.println(summaryDisplay);
+        String digitsOnly = phone.replaceAll("\\D", "");
 
-        Assert.assertTrue(summaryDisplay.contains("info@testifyltd.co.uk"));
+        Thread.sleep(5000);
+
+        String lastFiveDigits = digitsOnly.substring(digitsOnly.length() - 5);
+
+        Thread.sleep(5000);
+
+        System.out.println("Last 5 digits: " + lastFiveDigits);
+
+        // Clear ZIP code
+        WebElement zipCodeField = updateContact.getCustomerZipAddress();
+        zipCodeField.clear();
+
+        // Paste last 5 digits into ZIP
+        zipCodeField.sendKeys(lastFiveDigits);
+
+        // click update button
+
+        updateContact.getUpdateContactInfo().click();
+
+
+    }
+    public void sectionB_BlazeDemo_ThenPasteFlightNumberIntoParaBankZip() {
+
+        // Store ParaBank window
+        String paraBankWindow = driver.getWindowHandle();
+
+        // Open a new tab for BlazeDemo
+        driver.switchTo().newWindow(WindowType.TAB);
+        String blazeWindow = driver.getWindowHandle();
+
+        // --- BlazeDemo flow ---
+        driver.get("https://blazedemo.com/");
+        BlazeHomePage blazeHome = new BlazeHomePage(driver);
+
+
     }
 
-    }
+}

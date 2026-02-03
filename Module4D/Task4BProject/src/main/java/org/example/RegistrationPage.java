@@ -114,5 +114,12 @@ public class RegistrationPage {
     public WebElement getCreate() {
         return create;
     }
+    @FindBy(xpath = "//a[normalize-space()='Log Out']")
+    private WebElement logout;
+
+    public WebElement getLogout() {
+        return logout;
+    }
+
 
 }
