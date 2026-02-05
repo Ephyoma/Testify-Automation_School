@@ -1,5 +1,6 @@
 from appium import webdriver
 from appium.webdriver.common.appiumby import  AppiumBy
+from selenium.webdriver import ActionChains
 from  selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from appium.options.android import UiAutomator2Options
@@ -13,14 +14,19 @@ def main():
     options.automation_name = "UiAutomator2"
     options.device_name = "emulator-5554"
     options.udid = "emulator-5554"
-    options.app_package = "com.google.android.dialer"
-    options.app_activity = ".NexusLauncherActivity"
-    options.no_sign = True
+    options.app_package = "com.google.android.calculator"
+    #options.app_activity = "com.google.android.calculator.Calculator"
     options.new_command_timeout = 300
     print("Connecting to Appium...", flush=True)
     driver = webdriver.Remote("http://127.0.0.1:4723", options=options)
-    #time.sleep(5)
-    #driver.quit()
+    num1 = driver.find_element(AppiumBy.ID, "com.google.android.calculator:id/digit_1")
+    actions = ActionChains(driver)
+    actions.move_to_element(num1)
+    actions.click()
+    actions.perform()
+
+
+    time.sleep(3)
 
 
 if __name__ == "__main__":

@@ -13,14 +13,25 @@ def main():
     options.automation_name = "UiAutomator2"
     options.device_name = "emulator-5554"
     options.udid = "emulator-5554"
-    options.app_package = "com.google.android.dialer"
-    options.app_activity = ".NexusLauncherActivity"
-    options.no_sign = True
+    #options.app = "http://127.0.0.1:9009/Calculator_9.0%20%28827797324%29_APKPure.apk"
+    options.app_package = "com.google.android.calculator"
     options.new_command_timeout = 300
     print("Connecting to Appium...", flush=True)
     driver = webdriver.Remote("http://127.0.0.1:4723", options=options)
-    #time.sleep(5)
-    #driver.quit()
+    num2 = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "2")
+    num2.click()
+    multiple = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "multiply")
+    multiple.click()
+    num5 = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "5")
+    num5.click()
+    num0 = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0")
+    num0.click()
+
+
+
+
+    time.sleep(5)
+    driver.quit()
 
 
 if __name__ == "__main__":
