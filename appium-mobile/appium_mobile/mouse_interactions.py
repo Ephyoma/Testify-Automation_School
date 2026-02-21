@@ -21,12 +21,15 @@ def main():
     driver = webdriver.Remote("http://127.0.0.1:4723", options=options)
     num1 = driver.find_element(AppiumBy.ID, "com.google.android.calculator:id/digit_1")
     actions = ActionChains(driver)
-    actions.move_to_element(num1)
-    actions.click()
+    actions.move_to_element_with_offset(num1, 200, -200)
+    #actions.click()
+    #actions.double_click()
+    actions.click_and_hold()
+    actions.release()
     actions.perform()
 
 
-    time.sleep(3)
+    time.sleep(5)
 
 
 if __name__ == "__main__":
